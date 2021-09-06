@@ -96,8 +96,5 @@ public abstract class Product implements Rateable<Product>{
         return hash;
     }
 
-    @Override
-    public String toString() {
-        return id+", "+name+", "+price+", "+getDiscount()+", "+rating.getStars();
-    }
+
 }

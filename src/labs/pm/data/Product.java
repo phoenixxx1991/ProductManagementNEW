@@ -2,9 +2,12 @@ package labs.pm.data;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import static labs.pm.data.Rating.*;
+import java.time.LocalDate;
+import java.util.Objects;
 
-public class Product {
+import static labs.pm.data.Rating.NOT_RATED;
+
+public abstract class Product implements Rateable<Product>{
 
     public static final BigDecimal DISCOUNT_RATE = BigDecimal.valueOf(0.1);
     private int id;
@@ -12,20 +15,20 @@ public class Product {
     private BigDecimal price;
     private Rating rating;
 
-    public Product(int id, String name, BigDecimal price, Rating rating) {
+    Product(int id, String name, BigDecimal price, Rating rating) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.rating = rating;
     }
 
-    public Product(int id, String name, BigDecimal price) {
+    Product(int id, String name, BigDecimal price) {
         this(id,name,price,NOT_RATED);
     }
 
-    public Product(){
+    /*public Product(){
         this(0,"no name",BigDecimal.ZERO);
-    }
+    }*/
 
     public int getId() {
         return id;
@@ -55,12 +58,42 @@ public class Product {
         return price.multiply(DISCOUNT_RATE).setScale(2, RoundingMode.HALF_UP);
     }
 
+    /*public Object applyRating(int stars) {
+        return null;
+    }*/
+
+    @Override
     public Rating getRating() {
         return rating;
     }
 
-    public Product applyRating (Rating newRating){
-        return new Product(id,name,price,newRating);
+    //public abstract Product applyRating (Rating newRating);
+
+    public LocalDate getBestBefore(){
+        return LocalDate.now();
+    }
+
+    @Override
+    public String toString() {
+        return id+", "+name+", "+price+", "+getDiscount()+", "+rating.getStars()+", "+getBestBefore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        //if (o == null || getClass() != o.getClass()) return false;
+        if (o instanceof Product){
+            Product other = (Product) o;
+            return this.id == other.id && Objects.equals(this.name,other.name);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash * this.id;
+        return hash;
     }
 
     @Override

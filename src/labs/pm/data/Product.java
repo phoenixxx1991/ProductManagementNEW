@@ -95,4 +95,6 @@ public abstract class Product implements Rateable<Product>{
         hash = 23 * hash * this.id;
         return hash;
     }
+
+
 }

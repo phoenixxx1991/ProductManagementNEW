@@ -47,9 +47,10 @@ public class Shop {
         pm.reviewProduct(106, Rating.ONE_STAR, "I don't get it!");
         Comparator<Product> ratingSorter = (p1,p2) -> p2.getRating().ordinal()-p1.getRating().ordinal();
         Comparator<Product> priceSorter = (p1,p2) -> p2.getPrice().compareTo(p1.getPrice());
-        pm.printProducts(ratingSorter.thenComparing(priceSorter));
-        pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
-        //pm.printProductReport(106);
+        //pm.printProducts(ratingSorter.thenComparing(priceSorter));
+        //pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
+        pm.printProductReport(106);
+        pm.printProducts(p->p.getPrice().floatValue()<2,(p1,p2)->p2.getRating().ordinal()-p1.getRating().ordinal());
         /*Product p2 = pm.createProduct(102,"Coffee",BigDecimal.valueOf(1.99), Rating.FOUR_STAR);
         Product p3 = pm.createProduct(103,"Cake",BigDecimal.valueOf(3.99), Rating.FIVE_STAR, LocalDate.now().plusDays(2));
         Product p4 = pm.createProduct(105,"Cookie",BigDecimal.valueOf(3.99), Rating.TWO_STAR);
